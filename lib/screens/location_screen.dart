@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:clima/utilities/constants.dart';
 
@@ -11,6 +13,26 @@ class LocationScreen extends StatefulWidget {
 }
 
 class _LocationScreenState extends State<LocationScreen> {
+  String cityName;
+  String weatherHeader;
+  int temperature;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    print(widget.locationWeather);
+    updateUI(widget.locationWeather);
+  }
+
+  void updateUI(dynamic weatherData) {
+    cityName = weatherData['name'];
+    weatherHeader = weatherData['weather'][0]['main'];
+    double temp = weatherData['main']['temp'];
+    temperature = temp.toInt();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,18 +54,24 @@ class _LocationScreenState extends State<LocationScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  FlatButton(
-                    onPressed: () {},
-                    child: Icon(
-                      Icons.my_location,
-                      size: 50.0,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: FlatButton(
+                      onPressed: () {},
+                      child: Icon(
+                        Icons.my_location,
+                        size: 50.0,
+                      ),
                     ),
                   ),
-                  FlatButton(
-                    onPressed: () {},
-                    child: Icon(
-                      Icons.location_city,
-                      size: 50.0,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: FlatButton(
+                      onPressed: () {},
+                      child: Icon(
+                        Icons.location_city,
+                        size: 50.0,
+                      ),
                     ),
                   ),
                 ],
@@ -54,7 +82,7 @@ class _LocationScreenState extends State<LocationScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      '32°',
+                      '$temperature°',
                       style: kTempTextStyle,
                     ),
                     Text(
@@ -67,7 +95,7 @@ class _LocationScreenState extends State<LocationScreen> {
               Padding(
                 padding: EdgeInsets.only(bottom: 25.0),
                 child: Text(
-                  "It's 🍦 time in San Francisco!",
+                  "It's $weatherHeader in $cityName",
                   textAlign: TextAlign.center,
                   style: kMessageTextStyle,
                 ),
@@ -79,7 +107,3 @@ class _LocationScreenState extends State<LocationScreen> {
     );
   }
 }
-
-//String cityName = weatherData['name'];
-//String weatherHeader = weatherData['weather'][0]['main'];
-//double temperature = weatherData['main']['temp'];

@@ -18,17 +18,12 @@ class _LoadingScreenState extends State<LoadingScreen> {
     getLocationData();
   }
 
-  double latitude;
-  double longitude;
-
   void getLocationData() async {
     Location location = Location();
     await location.getCurrentLocation();
-    latitude = location.Latitude;
-    longitude = location.Longitude;
 
     Networker networker = Networker(
-        'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$apiKey');
+        'https://api.openweathermap.org/data/2.5/weather?lat=${location.Latitude}&lon=${location.Longitude}&units=metric&appid=$apiKey');
 
     var weatherData = await networker.getData();
 
