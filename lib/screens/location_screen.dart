@@ -85,11 +85,20 @@ class _LocationScreenState extends State<LocationScreen> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: FlatButton(
-                      onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return CityScreen();
-                        }));
+                      onPressed: () async {
+                        var typedName = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return CityScreen();
+                            },
+                          ),
+                        );
+                        if (typedName != null) {
+                          var weatherData =
+                              await weather.getCityLocationWeather(typedName);
+                          updateUI(weatherData);
+                        }
                       },
                       child: Icon(
                         Icons.place,
