@@ -5,7 +5,6 @@ class Networker {
   Networker(this.Url);
 
   final String Url;
-  //'https://api.openweathermap.org/data/2.5/weather?lat=$latitude&lon=$longitude&appid=$apiKey'
 
   Future getData() async {
     http.Response response = await http.get(Url);
